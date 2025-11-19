@@ -1,288 +1,284 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازی حدس عدد</title>
-    
-    <!-- فونت وزیرمتن از گوگل فونت -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
-    
-    <style>
-        /* --- استایل‌های اصلی و ریست --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #111827; /* رنگ پس‌زمینه تیره‌تر و یکنواخت */
-            color: #f9fafb;
-            padding: 15px;
-        }
-
-        /* --- کانتینر اصلی بازی --- */
-        #game-container {
-            background-color: #1f2937;
-            padding: 30px;
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-            text-align: center;
-            width: 100%;
-            max-width: 420px;
-            border: 1px solid #374151;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* --- عناصر متنی --- */
-        h1 {
-            color: #7dd3fc; /* رنگ آبی روشن‌تر و چشم‌نوازتر */
-            margin-bottom: 12px;
-            font-size: 28px;
-        }
-
-        #instructions {
-            color: #d1d5db;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        /* --- بخش ورودی و دکمه‌ها --- */
-        #input-area {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        #guess-input {
-            flex-grow: 1;
-            padding: 14px;
-            border-radius: 12px;
-            border: 2px solid #4b5563;
-            background-color: #374151;
-            color: #f9fafb;
-            font-size: 16px;
-            font-family: 'Vazirmatn', sans-serif;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        #guess-input::placeholder {
-            color: #9ca3af;
-        }
-
-        #guess-input:focus {
-            outline: none;
-            border-color: #7dd3fc;
-            box-shadow: 0 0 0 4px rgba(125, 211, 252, 0.2);
-        }
-
-        /* استایل عمومی دکمه‌ها */
-        button {
-            padding: 14px 22px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        button:active {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        #guess-button {
-            background-color: #3b82f6;
-            color: white;
-        }
-
-        #guess-button:hover {
-            background-color: #2563eb;
-        }
-        
-        #new-game-button {
-            background-color: #10b981;
-            color: white;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        #new-game-button:hover {
-            background-color: #059669;
-        }
-
-        /* --- فیدبک و پیام‌ها --- */
-        #feedback {
-            min-height: 28px;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            transition: color 0.3s ease;
-        }
-
-        .feedback-high { color: #fca5a5; } /* قرمز ملایم */
-        .feedback-low { color: #fde047; } /* زرد ملایم */
-        .feedback-win { color: #86efac; } /* سبز ملایم */
-        .feedback-error { color: #fdba74; } /* نارنجی برای خطا */
-
-
-        #guess-count {
-            color: #9ca3af;
-            font-size: 14px;
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>بازی حدس عدد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1724;
+  --card:#111827;
+  --muted:#9ca3af;
+  --accent:#7dd3fc;
+  --primary:#3b82f6;
+  --success:#10b981;
+  --danger:#fb7185;
+  --glass:rgba(255,255,255,0.04);
+  --radius:16px;
+}
+html,body{height:100%}
+body{
+  font-family:"Vazirmatn",sans-serif;
+  background:linear-gradient(180deg,var(--bg),#071025 120%);
+  color:#f8fafc;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+.container{
+  width:100%;
+  max-width:480px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 12px 40px rgba(2,6,23,0.7);
+  border:1px solid rgba(255,255,255,0.03);
+  position:relative;
+  overflow:hidden;
+  transition:transform .25s ease;
+}
+.header{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+.title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.logo{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,var(--primary),#60a5fa);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 18px rgba(59,130,246,0.18);
+}
+.logo svg{filter:drop-shadow(0 6px 12px rgba(0,0,0,0.35))}
+h1{font-size:20px;color:var(--accent);letter-spacing:0.2px}
+.controls{display:flex;gap:8px;align-items:center}
+.icon-btn{
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.04);
+  padding:8px;border-radius:10px;cursor:pointer;color:var(--muted);
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:all .18s ease;
+}
+.icon-btn:hover{transform:translateY(-3px);color:var(--accent)}
+.instructions{color:var(--muted);margin:14px 0 20px;line-height:1.5}
+.game-card{display:flex;flex-direction:column;gap:14px;padding-bottom:12px;}
+.input-row{display:flex;gap:10px;align-items:center}
+#guess-input{
+  flex:1;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);
+  background:#0b1220;color:#eef2ff;text-align:center;font-size:16px;
+  outline:none;transition:box-shadow .18s ease,border-color .18s ease;
+}
+#guess-input:focus{box-shadow:0 6px 18px rgba(125,211,252,0.12);border-color:var(--accent)}
+.btn{
+  padding:12px 16px;border-radius:12px;border:none;font-weight:700;
+  cursor:pointer;color:white;background:var(--primary);transition:all .15s ease;
+}
+.btn:hover{transform:translateY(-3px)}
+.btn.secondary{background:linear-gradient(90deg,#0ea5a4,#06b6d4)}
+.btn.full{width:100%}
+.feedback{min-height:26px;font-size:16px;font-weight:700}
+.f-high{color:#fca5a5}
+.f-low{color:#fde68a;color:#fbbf24}
+.f-win{color:#86efac}
+.counter{color:var(--muted);font-size:13px;text-align:center}
+.new-game{background:linear-gradient(90deg,var(--success),#34d399);border-radius:12px;padding:12px 14px;border:none;color:#032;cursor:pointer;transition:all .15s ease}
+.new-game.hidden{display:none}
+.range-pill{background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.02);font-weight:600;color:var(--muted)}
+.settings-panel{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:40;visibility:hidden;opacity:0;transition:opacity .18s ease;
+}
+.settings-panel.open{visibility:visible;opacity:1}
+.settings-card{
+  width:100%;max-width:420px;background:linear-gradient(180deg,#071233, rgba(255,255,255,0.02));padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,0.04);
+  box-shadow:0 18px 60px rgba(2,6,23,0.7);
+}
+.settings-card h3{color:var(--accent);margin-bottom:8px;font-size:18px}
+.form-row{display:flex;gap:10px;margin:12px 0}
+.form-row input{
+  flex:1;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);background:#071025;color:#eef2ff;text-align:center
+}
+.note{color:var(--muted);font-size:13px;margin-top:6px}
+.row-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
+.err{color:var(--danger);font-weight:700;font-size:14px;margin-top:8px;text-align:center}
+@media (max-width:420px){
+  .container{padding:18px;border-radius:18px}
+  h1{font-size:18px}
+  .logo{width:44px;height:44px}
+  #guess-input{padding:10px;font-size:15px}
+  .btn{padding:10px 12px;font-size:15px}
+}
+</style>
 </head>
 <body>
+<div class="container" id="main">
+  <div class="header">
+    <div class="title">
+      <div class="logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 12a9 9 0 1018 0 9 9 0 00-18 0z" fill="rgba(255,255,255,0.12)"/>
+          <path d="M8 12h8M12 8v8" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+        </svg>
+      </div>
+      <h1>بازی حدس عدد</h1>
+    </div>
+    <div class="controls">
+      <div class="range-pill" id="current-range">بازه: 1 — 100</div>
+      <button class="icon-btn" id="open-settings" aria-label="تنظیمات">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 15.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V20a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06A2 2 0 112.3 16.9l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H4a2 2 0 110-4h.09c.7 0 1.32-.36 1.51-1a1.65 1.65 0 00-.33-1.82l-.06-.06A2 2 0 116.1 2.3l.06.06c.5.5 1.2.7 1.82.33.7-.4 1.51-.4 2.21 0 .62.37 1.32.2 1.82-.33l.06-.06A2 2 0 1117.7 7.1l-.06.06c-.4.7-.4 1.51 0 2.21.37.62.2 1.32-.33 1.82-.5.5-.7 1.2-.33 1.82z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
 
-    <div id="game-container">
-        <h1>بازی حدس عدد</h1>
-        <p id="instructions">یک عدد بین ۱ تا ۱۰۰ انتخاب کردم. می‌تونی حدسش بزنی؟</p>
-        
-        <div id="input-area">
-            <input type="number" id="guess-input" placeholder="حدست رو وارد کن..." min="1" max="100" autofocus>
-            <button id="guess-button">حدس بزن</button>
-        </div>
-        
-        <p id="feedback"></p>
-        <p id="guess-count">تعداد حدس‌ها: 0</p>
-        
-        <button id="new-game-button" class="hidden">بازی جدید</button>
+  <p class="instructions" id="instructions">یک عدد بین مقادیر تعیین‌شده انتخاب کن و سعی کن آن را حدس بزنی.</p>
+
+  <div class="game-card">
+    <div class="input-row">
+      <input id="guess-input" type="number" placeholder="حدست رو وارد کن">
+      <button class="btn" id="guess-button">حدس بزن</button>
     </div>
 
-    <!-- کتابخانه برای افکت کانفتی (کاغذ رنگی) -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-    
-    <script>
-        // --- انتخاب عناصر DOM ---
-        const guessInput = document.getElementById('guess-input');
-        const guessButton = document.getElementById('guess-button');
-        const feedback = document.getElementById('feedback');
-        const guessCountEl = document.getElementById('guess-count');
-        const newGameButton = document.getElementById('new-game-button');
+    <div class="feedback" id="feedback"></div>
+    <div class="counter" id="guess-count">تعداد حدس‌ها: 0</div>
+    <button id="new-game-button" class="new-game hidden">شروع دوباره</button>
+  </div>
+</div>
 
-        // --- متغیرهای بازی ---
-        let secretNumber;
-        let guesses;
+<div class="settings-panel" id="settings">
+  <div class="settings-card" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <h3 id="settings-title">تنظیمات بازی</h3>
+    <div class="form-row">
+      <input id="min-input" type="number" placeholder="حداقل (مثلاً 1)">
+      <input id="max-input" type="number" placeholder="حداکثر (مثلاً 100)">
+    </div>
+    <div class="note">محدوده باید اعداد صحیح و کوچکتر از 1,000,000 باشد و حداقل کمتر از حداکثر باشد.</div>
+    <div class="err" id="settings-error" style="display:none"></div>
+    <div class="row-actions">
+      <button class="btn secondary" id="settings-cancel">انصراف</button>
+      <button class="btn" id="settings-apply">اعمال و شروع</button>
+    </div>
+  </div>
+</div>
 
-        // --- تابع شروع بازی جدید ---
-        function newGame() {
-            secretNumber = Math.floor(Math.random() * 100) + 1;
-            guesses = 0;
-            
-            feedback.textContent = '';
-            feedback.className = '';
-            guessCountEl.textContent = 'تعداد حدس‌ها: 0';
-            guessInput.value = '';
-            guessInput.disabled = false;
-            guessButton.disabled = false;
-            newGameButton.classList.add('hidden');
-            guessInput.focus();
-        }
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<script>
+let minVal=1,maxVal=100,secretNumber=0,guesses=0;
+const guessInput=document.getElementById('guess-input');
+const guessButton=document.getElementById('guess-button');
+const feedback=document.getElementById('feedback');
+const guessCountEl=document.getElementById('guess-count');
+const newGameButton=document.getElementById('new-game-button');
+const currentRange=document.getElementById('current-range');
+const instructions=document.getElementById('instructions');
+const settings=document.getElementById('settings');
+const openSettings=document.getElementById('open-settings');
+const settingsApply=document.getElementById('settings-apply');
+const settingsCancel=document.getElementById('settings-cancel');
+const minInput=document.getElementById('min-input');
+const maxInput=document.getElementById('max-input');
+const settingsError=document.getElementById('settings-error');
 
-        // --- تابع بررسی حدس کاربر ---
-        function checkGuess() {
-            const userGuess = parseInt(guessInput.value);
+function updateRangeLabel(){
+  currentRange.textContent=`بازه: ${minVal} — ${maxVal}`;
+  instructions.textContent=`یک عدد بین ${minVal} تا ${maxVal} انتخاب کردم. می‌تونی حدسش بزنی؟`;
+  guessInput.placeholder=`عدد بین ${minVal} و ${maxVal} را وارد کن`;
+  guessInput.min=minVal;guessInput.max=maxVal;
+}
 
-            // بررسی ورودی نامعتبر
-            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
-                feedback.textContent = 'لطفاً یک عدد معتبر بین ۱ تا ۱۰۰ وارد کن.';
-                feedback.className = 'feedback-error';
-                return;
-            }
+function newGame(){
+  secretNumber=Math.floor(Math.random()*(maxVal-minVal+1))+minVal;
+  guesses=0;
+  feedback.textContent='';
+  feedback.className='feedback';
+  guessCountEl.textContent='تعداد حدس‌ها: 0';
+  guessInput.value='';
+  guessInput.disabled=false;
+  guessButton.disabled=false;
+  newGameButton.classList.add('hidden');
+  guessInput.focus();
+}
 
-            guesses++;
-            guessCountEl.textContent = `تعداد حدس‌ها: ${guesses}`;
-            
-            // مقایسه حدس با عدد مخفی
-            if (userGuess > secretNumber) {
-                feedback.textContent = 'بیا پایین! عددت بزرگه.';
-                feedback.className = 'feedback-low';
-            } else if (userGuess < secretNumber) {
-                feedback.textContent = 'برو بالا! عددت کوچیکه.';
-                feedback.className = 'feedback-high';
-            } else {
-                // حالت برنده شدن
-                feedback.textContent = `🎉 آفرین! در ${guesses} حدس برنده شدی! 🎉`;
-                feedback.className = 'feedback-win';
-                guessInput.disabled = true;
-                guessButton.disabled = true;
-                newGameButton.classList.remove('hidden');
-                
-                // اجرای افکت زیبای کانفتی
-                launchConfetti();
-            }
-            guessInput.value = '';
-            guessInput.focus();
-        }
+function validateAndSetRange(a,b){
+  if(!Number.isFinite(a)||!Number.isFinite(b))return'لطفاً اعداد معتبر وارد کن.';
+  if(!Number.isInteger(a)||!Number.isInteger(b))return'لطفاً عدد صحیح وارد کن.';
+  if(a< -1000000 || b>1000000) return 'محدوده باید بین -1,000,000 تا 1,000,000 باشد.';
+  if(a>=b) return 'مقدار حداقل باید کوچکتر از حداکثر باشد.';
+  return '';
+}
 
-        // --- تابع اجرای افکت کانفتی ---
-        function launchConfetti() {
-            const duration = 2 * 1000;
-            const animationEnd = Date.now() + duration;
-            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+function checkGuess(){
+  const v=Number(guessInput.value);
+  if(!Number.isFinite(v) || !Number.isInteger(v) || v<minVal || v>maxVal){
+    feedback.textContent=`لطفاً یک عدد صحیح بین ${minVal} تا ${maxVal} وارد کن.`;
+    feedback.className='feedback f-high';
+    return;
+  }
+  guesses++;
+  guessCountEl.textContent=`تعداد حدس‌ها: ${guesses}`;
+  if(v>secretNumber){
+    feedback.textContent='بیا پایین! عددت بزرگه.';
+    feedback.className='feedback f-low';
+  }else if(v<secretNumber){
+    feedback.textContent='برو بالا! عددت کوچیکه.';
+    feedback.className='feedback f-high';
+  }else{
+    feedback.textContent=`🎉 آفرین! در ${guesses} حدس برنده شدی! 🎉`;
+    feedback.className='feedback f-win';
+    guessInput.disabled=true;guessButton.disabled=true;
+    newGameButton.classList.remove('hidden');
+    launchConfetti();
+  }
+  guessInput.value='';guessInput.focus();
+}
 
-            function randomInRange(min, max) {
-                return Math.random() * (max - min) + min;
-            }
+function launchConfetti(){
+  const duration=2000;
+  const end=Date.now()+duration;
+  const defaults={startVelocity:35,spread:360,ticks:80,zIndex:9999};
+  const iv=setInterval(function(){
+    const timeLeft=end-Date.now();
+    if(timeLeft<=0){clearInterval(iv);return}
+    const particleCount=50*(timeLeft/duration);
+    confetti(Object.assign({},defaults,{particleCount,origin:{x:Math.random()*0.3+0.1,y:Math.random()*0.2}}));
+    confetti(Object.assign({},defaults,{particleCount,origin:{x:Math.random()*0.3+0.65,y:Math.random()*0.2}}));
+  },250);
+}
 
-            const interval = setInterval(function() {
-                const timeLeft = animationEnd - Date.now();
+guessButton.addEventListener('click',checkGuess);
+guessInput.addEventListener('keyup',e=>{if(e.key==='Enter'&&!guessButton.disabled)checkGuess()});
+newGameButton.addEventListener('click',newGame);
 
-                if (timeLeft <= 0) {
-                    return clearInterval(interval);
-                }
+openSettings.addEventListener('click',()=>{
+  minInput.value=minVal;
+  maxInput.value=maxVal;
+  settingsError.style.display='none';
+  settings.classList.add('open');
+});
 
-                const particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
-        }
+settingsCancel.addEventListener('click',()=>{settings.classList.remove('open')});
+settingsApply.addEventListener('click',()=>{
+  const a=Number(minInput.value), b=Number(maxInput.value);
+  const err=validateAndSetRange(a,b);
+  if(err){settingsError.style.display='block';settingsError.textContent=err;return}
+  minVal=a;maxVal=b;updateRangeLabel();settings.classList.remove('open');newGame();
+});
 
-        // --- اتصال رویدادها (Event Listeners) ---
-        guessButton.addEventListener('click', checkGuess);
-        
-        // امکان ارسال با کلید Enter
-        guessInput.addEventListener('keyup', (event) => {
-            if (event.key === 'Enter' && !guessButton.disabled) {
-                checkGuess();
-            }
-        });
+document.addEventListener('keydown',e=>{if(e.key==='Escape')settings.classList.remove('open')});
 
-        newGameButton.addEventListener('click', newGame);
-
-        // --- شروع اولین دور بازی ---
-        newGame();
-    </script>
+updateRangeLabel();
+newGame();
+</script>
 </body>
 </html>
